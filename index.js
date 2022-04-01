@@ -136,3 +136,61 @@ let laptop = {
 
 laptop.start(); //MacBook air
 // here arrow() uses `this` from the outer laptop.start() method:
+
+//Tasks
+// ***********************************************
+
+//1. Using "this" in object literal
+// Here the function makeUser returns an object.
+
+// What is the result of accessing its ref? Why?
+// function makeUser() {
+//   return {
+//     name: "John",
+//     ref: this
+//   };
+// }
+
+// let user1 = makeUser();
+
+// alert( user1.ref.name ); // What's the result?
+// Error: Cannot read property 'name' of undefined
+
+function makeUser() {
+  return {
+    name: 'John',
+    ref: function () {
+      return this;
+    },
+  };
+}
+
+let user1 = makeUser();
+
+console.log(user1.ref().name); //John
+
+//2. Create a calculator
+// Create an object calculator with three methods:
+
+// read() prompts for two values and saves them as object properties.
+// sum() returns the sum of saved values.
+// mul() multiplies saved values and returns the result.
+let calculator = {
+  // ... your code ...
+  read() {
+    // this.x = prompt("Enter x");
+    // this.y = prompt("Enter y");
+  },
+
+  sum() {
+    return +this.x + +this.y;
+  },
+  mul() {
+    return this.x * this.y;
+  },
+};
+
+calculator.read();
+console.log(calculator.sum()); // 2, 3 -> 5
+console.log(calculator.mul()); // 2, 3 -> 6
+
