@@ -141,6 +141,8 @@ laptop.start(); //MacBook air
 // ***********************************************
 
 //1. Using "this" in object literal
+//--------------------------------------------
+
 // Here the function makeUser returns an object.
 
 // What is the result of accessing its ref? Why?
@@ -170,6 +172,8 @@ let user1 = makeUser();
 console.log(user1.ref().name); //John
 
 //2. Create a calculator
+//--------------------------------------------
+
 // Create an object calculator with three methods:
 
 // read() prompts for two values and saves them as object properties.
@@ -190,7 +194,40 @@ let calculator = {
   },
 };
 
-calculator.read();
-console.log(calculator.sum()); // 2, 3 -> 5
-console.log(calculator.mul()); // 2, 3 -> 6
+// calculator.read();
+// console.log(calculator.sum()); // 2, 3 -> 5
+// console.log(calculator.mul()); // 2, 3 -> 6
 
+// 3. Chaining
+//--------------------------------------------
+
+// There’s a ladder object that allows to go up and down:
+
+let ladder = {
+  step: 0,
+  up() {
+    this.step++;
+    return this; //To make a chainable function
+  },
+  down() {
+    this.step--;
+    return this; //To make a chainable function
+  },
+  showStep: function () {
+    // shows the current step
+    console.log(this.step);
+    return this; //To make a chainable function
+  },
+};
+// Now, if we need to make several calls in sequence, can do it like this:
+
+// ladder.up();
+// ladder.up();
+// ladder.down();
+// ladder.showStep(); // 1
+// ladder.down();
+// ladder.showStep(); // 0
+// Modify the code of up, down and showStep to make the calls chainable, like this:
+
+ladder.up().up().up().showStep().down().down().showStep(); // shows 3 then 1
+// Such approach is widely used across JavaScript libraries.
