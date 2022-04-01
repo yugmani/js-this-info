@@ -50,3 +50,78 @@ let myOrder = {
     console.log('Click! Click!!');
   },
 };
+
+//“this” in methods
+// ---------------------------------------
+
+//It’s common that an object method needs to access the information stored in the object to do its job.
+
+// For instance, the code inside user.sayHi() may need the name of the user.
+
+// To access the object, a method can use the this keyword.
+
+// The value of this is the object “before dot”, the one used to call the method.
+
+let car = {
+  make: 'Honda',
+  model: 'Civic',
+  hunk() {
+    console.log(`${this.make} hunks.`); //using `this` keyword
+  },
+  drive() {
+    console.log(`I am driving ${car.make}.`); //without `this` keyword
+  },
+};
+
+//During the execution of car.hunk(), the value of this is car.
+car.hunk(); //Honda hunks.
+
+// instead of `this.make` we may use `car.make` without `this` keyword;
+
+//…But such code is unreliable. If we decide to copy user to another variable, e.g. admin = user and overwrite user with something else, then it will access the wrong object.
+
+let newCar = car;
+car = null; //overwriting
+
+newCar.hunk(); //Honda hunks. --> this is fine.
+// But
+// newCar.drive(); //index.js:56 Error: Cannot read properties of null (reading 'make') --> ? because there is no `this` keyword used to access properties.
+
+//“this” is not bound
+let truck = {
+  make: 'Tata',
+};
+
+let suv = {
+  make: 'fords',
+};
+
+function repair() {
+  console.log(`${this.make} is being repaired.`);
+}
+
+truck.r = repair;
+suv.r = repair;
+
+truck.r(); //Tata is being repaired.
+suv.r(); //fords is being repaired.
+truck['r'](); //Tata is being repaired.
+suv['r'](); //fords is being repaired.
+
+// Calling without an object: this == undefined
+// repair(); //Cannot read properties of undefined (reading 'make')
+//this is undefined in strict mode. I
+
+//In non-strict mode the value of this in such case will be the global object (window in a browser,
+
+//The consequences of unbound this
+// --------------------------------------
+
+//In JavaScript this is “free”, its value is evaluated at call-time and does not depend on where the method was declared, but rather on what object is “before the dot”.
+
+// a function with `this` can be reused for different objects.
+
+// Arrow functions have no “this”
+// --------------------------------------
+
+//Arrow functions don’t have their “own” this. If we reference this from such a function, it’s taken from the outer “normal” function.
