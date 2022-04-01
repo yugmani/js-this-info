@@ -125,3 +125,14 @@ suv['r'](); //fords is being repaired.
 // --------------------------------------
 
 //Arrow functions don’t have their “own” this. If we reference this from such a function, it’s taken from the outer “normal” function.
+let laptop = {
+  make: 'Apple',
+  model: 'MacBook air',
+  start() {
+    let arrow = () => console.log(this.model);
+    arrow();
+  },
+};
+
+laptop.start(); //MacBook air
+// here arrow() uses `this` from the outer laptop.start() method:
